@@ -1,7 +1,12 @@
 # 软件园项目
 
+### 项目使用技术
+* 使用RxJava和Retrofit 来实现访问服务器的接口
+* 使用 amqt 来实现实时数据推送
+* 使用 butterknife 实现注入
+
 ### commit log 规范
----
+
 
 * feat: 新功能
 * fix: 修补bug
@@ -11,7 +16,7 @@
 * test: 增加测试
 * chore: 构建过程或辅助工具的变动
 
-### 示例
+#### 示例
 
 ```
 feat($browser): onUrlChange event (popstate/hashchange/polling)
