@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SoftWareCenter</string>
+    <string name="basic">基本信息</string>
+    <string name="wmsystem">WMS仓库管理系统</string>
+    <string name="aps">APS高级排产</string>
+    <string name="control">生产过程控制</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
