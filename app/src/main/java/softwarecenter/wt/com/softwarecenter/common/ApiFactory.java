@@ -17,7 +17,7 @@ public class ApiFactory {
     private volatile static ApiFactory INSTANCE = null;
 
 
-    private ApiFactory() {
+    private  ApiFactory() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -34,11 +34,6 @@ public class ApiFactory {
 
 
     public static ApiFactory getInstance() {
-
-        return INSTANCE;
-    }
-
-    public<T> T getApi(Class<T> t) {
         if(INSTANCE == null) {
             synchronized (ApiFactory.class) {
                 if(INSTANCE == null) {
@@ -46,6 +41,10 @@ public class ApiFactory {
                 }
             }
         }
+        return INSTANCE;
+    }
+
+    public<T> T getApi(Class<T> t) {
         return INSTANCE.getApi(t);
     }
 }
