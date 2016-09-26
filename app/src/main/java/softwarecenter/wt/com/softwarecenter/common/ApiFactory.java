@@ -15,6 +15,7 @@ public class ApiFactory {
     private static final long DEFAULT_TIMEOUT  = 5;
     private static final String BASE_URL = "";
     private volatile static ApiFactory INSTANCE = null;
+    private Retrofit retrofit = null;
 
 
     private  ApiFactory() {
@@ -24,7 +25,7 @@ public class ApiFactory {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(interceptor);
-        Retrofit retrofit = new Retrofit.Builder()
+         retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -45,6 +46,6 @@ public class ApiFactory {
     }
 
     public<T> T getApi(Class<T> t) {
-        return INSTANCE.getApi(t);
+        return  retrofit.create(t);
     }
 }
