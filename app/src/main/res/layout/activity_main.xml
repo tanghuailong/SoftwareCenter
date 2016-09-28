@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="softwarecenter.wt.com.softwarecenter.MainActivity"
     android:orientation="vertical">
-    
+
     <FrameLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"

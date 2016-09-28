@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private View mView;
     private List<Tab> mTabs=new ArrayList<>(4);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
