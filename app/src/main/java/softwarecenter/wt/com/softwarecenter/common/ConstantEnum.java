@@ -4,7 +4,7 @@ package softwarecenter.wt.com.softwarecenter.common;
  * Created by tanghuailong on 2016/9/28.
  */
 
-import softwarecenter.wt.com.softwarecenter.event.EventTest;
+import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
 
 /**
  * 储存所有订阅主图
@@ -12,7 +12,7 @@ import softwarecenter.wt.com.softwarecenter.event.EventTest;
 public enum ConstantEnum{
 
     //这里添加订阅的主题
-    TOPIC_TEST("test", EventTest.class);
+    TOPIC_ALARM("alarm",EventAlarm.class);
 
     private String topic;
     private Class someClass;

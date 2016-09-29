@@ -20,6 +20,10 @@ import softwarecenter.wt.com.softwarecenter.event.EventLost;
 /**
  * Created by tanghuailong on 2016/9/27.
  */
+
+/**
+ * Mqtt处理Service ，主要处理包括连接，断开重连，已经订阅节点
+ */
 public class MqttService extends Service  {
 
     public static final String LOG_TAG = "MqttService";
