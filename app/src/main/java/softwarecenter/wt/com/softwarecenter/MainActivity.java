@@ -1,7 +1,9 @@
 package softwarecenter.wt.com.softwarecenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,12 +19,14 @@ import softwarecenter.wt.com.softwarecenter.fragment.ApsFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.BasicFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.IndustrialContrlFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.WmsFragment;
+import softwarecenter.wt.com.softwarecenter.service.MqttService;
 import softwarecenter.wt.com.softwarecenter.widget.FragmentTabHost;
 
 /**
  * Created on 2016/09/22
  */
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "MainActivity";
     private FragmentTabHost mTabhost;
     private LayoutInflater mInflater;
     private View mView;
@@ -34,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initTab();
+
+        //启动service
+        Intent intent = new Intent(this, MqttService.class);
+        startService(intent);
+
+
+
 
     }
 
@@ -77,6 +88,15 @@ public class MainActivity extends AppCompatActivity {
         img.setImageResource(tab.getIcon());
         text.setText(tab.getTitle());
         return mView;
+
+
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG,"onDestory");
+        Intent intent = new Intent(this,MqttService.class);
+        stopService(intent);
+    }
 }
