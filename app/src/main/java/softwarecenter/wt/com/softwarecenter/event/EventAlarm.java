@@ -9,8 +9,17 @@ public class EventAlarm {
     private String data;
     private String message;
     private String state;
+    private String station;
     private String device_code;
 
+
+    public String getStation() {
+        return station;
+    }
+
+    public void setStation(String station) {
+        this.station = station;
+    }
 
     public String getDevice() {
         return device;
