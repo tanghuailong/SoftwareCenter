@@ -1,5 +1,8 @@
 package softwarecenter.wt.com.softwarecenter;
-
+/**
+ * Created by duanshiyao.
+ * email：
+ */
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -13,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.text.format.DateFormat;
 
-public class SplashScreen extends Activity {
+public class SplashScreeActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
@@ -43,9 +46,9 @@ public class SplashScreen extends Activity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 /* Create an Intent that will start the Main WordPress Activity. */
-                Intent mainIntent = new Intent(SplashScreen.this, welcome.class);
-                SplashScreen.this.startActivity(mainIntent);
-                SplashScreen.this.finish();
+                Intent mainIntent = new Intent(SplashScreeActivity.this, WelcomeActivity.class);
+                SplashScreeActivity.this.startActivity(mainIntent);
+                SplashScreeActivity.this.finish();
             }
         }, 2900); //2900 for release
 

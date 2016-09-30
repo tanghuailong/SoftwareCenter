@@ -12,15 +12,16 @@
 
 
         >
-        <activity android:name=".alarmActivity">
+        <activity android:name=".SplashScreeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".welcome" />
+        <activity android:name=".WelcomeActivity" />
        <activity android:name=".MainActivity"/>
+        <service android:name=".service.ScanService"/>
 
         <service android:name=".service.MqttService"/>
     </application>

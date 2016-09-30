@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/welcome_rlayout"
+
+    android:background="@mipmap/welcomebg">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/wecone"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/weltwo"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/welstree"
+        android:layout_weight="1"/>
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_centerInParent="true"
+        >
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/weclcometv1"
+
+            android:text=" 山东万腾电子科技有限公司成立于2014年，总部位于山东省济南市高新区齐鲁软件园，在上海，烟台，宁波设有分公司。现有员工120余人，其中博士学历6人、硕士学历40余人、本科学历60余人。
+         在智能制造领域落地150余个项目，参与了2016年工信部物联网网关标准的制定，积累了丰富的实践经验，并取得相关知识产权42项。
+                       "
+            android:textSize="40dp"
+            android:textColor="#FFFFFF"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/weclcometv2"
+
+            android:text=" 山东万腾电子科技有限公司成立于2014年，总部位于山东省济南市高新区齐鲁软件园，在上海，烟台，宁波设有分公司。现有员工120余人，其中博士学历6人、硕士学历40余人、本科学历60余人。以全球视野、本土智慧；立足实业、佐以虚拟；基于数据、增强现实的发展思路，在许多领域处于国内及国际领先水平。
+
+                       "
+            android:textColor="#FFFFFF"
+            android:textSize="40dp"
+            
+
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/wtlogo"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
