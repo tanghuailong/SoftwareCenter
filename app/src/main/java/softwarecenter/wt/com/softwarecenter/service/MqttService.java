@@ -20,6 +20,10 @@ import softwarecenter.wt.com.softwarecenter.event.EventLost;
 /**
  * Created by tanghuailong on 2016/9/27.
  */
+
+/**
+ * Mqtt处理Service ，主要处理包括连接，断开重连，已经订阅节点
+ */
 public class MqttService extends Service  {
 
     public static final String LOG_TAG = "MqttService";
@@ -31,10 +35,9 @@ public class MqttService extends Service  {
     public void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG,"onCreate");
+        EventBus.getDefault().register(this);
         mDeviceId = String.format(DEVICE_ID_FORMAT, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
         connectRabbitmq(mDeviceId);
-        subscribeTopic();
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -49,22 +52,6 @@ public class MqttService extends Service  {
     }
 
     public void connectRabbitmq(String deviceId) {
-
-//
-//        Observable.create((r) -> {
-//             Boolean result = MqttManager.getInstance().createConnection(deviceId);
-//             r.onNext(result);
-//        }).map((t) -> {
-//            if(t.equals(true)) {
-//                return Observable.just(t);
-//            }else {
-//                return Observable.error(new MqttException(1));
-//            }
-//        }).retry(3).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe((n) -> {
-//                    Log.d(LOG_TAG,"the connect result is "+n);
-//                });
-
 
         Observable.create((r) -> {
             Boolean result = MqttManager.getInstance().createConnection(deviceId);
@@ -85,19 +72,7 @@ public class MqttService extends Service  {
     }
 
 
-    public void subscribeTopic() {
-        Observable.create((r) -> {
-            Boolean result = MqttManager.getInstance().subscribe();
-            r.onNext(result);
-        }).repeatWhen((o) -> {
-            Log.d(LOG_TAG,"不能订阅...");
-            return o;
-        }).takeUntil((r) ->  r.equals(true)).subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((r) -> {
-                    Log.d(LOG_TAG,"订阅...");
-                });
-    }
+
 
 
 

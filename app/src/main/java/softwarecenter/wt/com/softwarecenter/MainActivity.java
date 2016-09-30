@@ -11,10 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.facebook.stetho.Stetho;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import softwarecenter.wt.com.softwarecenter.bean.Tab;
+import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
 import softwarecenter.wt.com.softwarecenter.fragment.ApsFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.BasicFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.IndustrialContrlFragment;
@@ -26,6 +33,7 @@ import softwarecenter.wt.com.softwarecenter.widget.FragmentTabHost;
  * Created on 2016/09/22
  */
 public class MainActivity extends AppCompatActivity {
+
     private static final String LOG_TAG = "MainActivity";
     private FragmentTabHost mTabhost;
     private LayoutInflater mInflater;
@@ -37,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //初始化调试工具
+        Stetho.initializeWithDefaults(this);
+        //订阅EventBus
+        EventBus.getDefault().register(this);
 
         initTab();
 
         //启动service
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
-
-
-
 
     }
 
@@ -93,10 +102,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void  getAlarm(EventAlarm eventAlarm) {
+        //把获得的数据放入View中
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG,"onDestory");
+        //取消订阅
+        EventBus.getDefault().unregister(this);
         Intent intent = new Intent(this,MqttService.class);
         stopService(intent);
     }
