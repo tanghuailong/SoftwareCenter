@@ -12,7 +12,7 @@ import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
 public enum ConstantEnum{
 
     //这里添加订阅的主题
-    TOPIC_ALARM("alarm",EventAlarm.class);
+    TOPIC_ALARM("alarm", EventAlarm[].class);
 
     private String topic;
     private Class someClass;

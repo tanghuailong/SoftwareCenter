@@ -1,4 +1,4 @@
-package softwarecenter.wt.com.softwarecenter;
+package softwarecenter.wt.com.softwarecenter.adapter;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project
@@ -84,7 +84,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 		for (int i = 0; i < childCount; i++)
 		{
 			final View child = parent.getChildAt(i);
-			android.support.v7.widget.RecyclerView v = new android.support.v7.widget.RecyclerView(
+			RecyclerView v = new RecyclerView(
 					parent.getContext());
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();

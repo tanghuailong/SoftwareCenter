@@ -5,16 +5,13 @@ package softwarecenter.wt.com.softwarecenter;
  */
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.text.format.DateFormat;
 
 public class SplashScreeActivity extends Activity {
     /**
@@ -32,16 +29,6 @@ public class SplashScreeActivity extends Activity {
         setContentView(R.layout.splashscreen_layout);
         mTime = (TextView) findViewById(R.id.timetextview);
         new TimeThread().start();
-
-        //Display the current version number
-        PackageManager pm = getPackageManager();
-        try {
-            PackageInfo pi = pm.getPackageInfo("org.wordpress.android", 0);
-            TextView versionNumber = (TextView) findViewById(R.id.versionnumbertextview);
-            versionNumber.setText("Version " + pi.versionName);
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
 
         new Handler().postDelayed(new Runnable() {
             public void run() {

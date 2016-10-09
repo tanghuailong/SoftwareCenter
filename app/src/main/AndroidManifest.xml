@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="softwarecenter.wt.com.softwarecenter">
+          package="softwarecenter.wt.com.softwarecenter">
+    //横竖屏切换
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-
-        android:theme="@style/AppTheme"
-
-
-        >
-        <activity android:name=".SplashScreeActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".WelcomeActivity" />
-       <activity android:name=".MainActivity"/>
-        <service android:name=".service.ScanService"/>
+            </activity>
 
+        <activity android:name=".SplashScreeActivity">
+
+        </activity>
+        <activity android:name=".WelcomeActivity"/>
+
+        <service android:name=".service.ScanService"/>
         <service android:name=".service.MqttService"/>
+        <service
+            android:name=".service.SwipeCardService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

@@ -6,45 +6,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/stationtextview"
+            android:id="@+id/text_devicename"
+            android:layout_gravity="center"
+            android:gravity="center"
             />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/devicetextview"
+            android:id="@+id/text_station"
+            android:layout_gravity="center"
+            android:gravity="center"
             />
     </LinearLayout>
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1">
-
+    android:layout_weight="1"
+    android:layout_gravity="center"
+    android:gravity="center">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/alarm_time_tv"
+        android:id="@+id/text_alarmdate"
+        android:layout_gravity="center"
+        android:gravity="center"
         />
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/alarm_hint_tv"
+            android:id="@+id/text_alarminfo"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_state"
+            android:layout_gravity="center"
+            android:gravity="center"
             />
     </LinearLayout>
 

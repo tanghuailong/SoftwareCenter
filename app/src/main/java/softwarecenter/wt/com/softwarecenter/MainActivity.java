@@ -1,7 +1,10 @@
 package softwarecenter.wt.com.softwarecenter;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,27 +13,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Lib.FWReader.S8.function_S8;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import softwarecenter.wt.com.softwarecenter.bean.Tab;
-import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
+import softwarecenter.wt.com.softwarecenter.common.ApiFactory;
 import softwarecenter.wt.com.softwarecenter.fragment.ApsFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.BasicFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.IndustrialContrlFragment;
 import softwarecenter.wt.com.softwarecenter.fragment.WmsFragment;
+import softwarecenter.wt.com.softwarecenter.service.ApiService;
 import softwarecenter.wt.com.softwarecenter.service.MqttService;
+import softwarecenter.wt.com.softwarecenter.service.SwipeCardService;
 import softwarecenter.wt.com.softwarecenter.widget.FragmentTabHost;
 
 /**
- * Created on 2016/09/22
+ * Created by chenggong on 2016/09/22
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +48,31 @@ public class MainActivity extends AppCompatActivity {
     private View mView;
     private List<Tab> mTabs=new ArrayList<>(4);
 
+    private SwipeCardService swipeCardService;
+    private boolean mBound = false;
+
+    private boolean isAccess = false;
+
+    private String lastLoginId="";
+
+    private long startTime=0;
+
+    private ApiService apiService= ApiFactory.getInstance().getApi(ApiService.class);
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            SwipeCardService.MyBinder binder = (SwipeCardService.MyBinder)iBinder;
+            swipeCardService= binder.getService();
+            mBound = true;
+            swipeCardService.test(new function_S8(MainActivity.this));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //初始化调试工具
         Stetho.initializeWithDefaults(this);
-        //订阅EventBus
-        EventBus.getDefault().register(this);
-
         initTab();
-
         //启动service
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
+
+
+
+
 
     }
 
@@ -102,18 +135,73 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void  getAlarm(EventAlarm eventAlarm) {
-        //把获得的数据放入View中
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG,"onDestory");
-        //取消订阅
-        EventBus.getDefault().unregister(this);
         Intent intent = new Intent(this,MqttService.class);
         stopService(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(LOG_TAG,"onStart");
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(String cardId){
+        long endTime=System.currentTimeMillis();
+        if(!cardId.equals(lastLoginId)) {
+            startTime = 0;
+        }
+        if(endTime-startTime>60000) {
+
+            apiService.getLogoutResult(cardId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((r) -> {
+                        if (r.isCode()) {
+                            lastLoginId = cardId;
+                            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
+                            lastLoginId = cardId;
+                        }
+                    }, (e) -> {
+                        e.printStackTrace();
+                    });
+        }
+
+
+
+    }
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        Intent intent = new Intent(this,SwipeCardService.class);
+        bindService(intent,mConnection,BIND_AUTO_CREATE);
+
+        Log.d(LOG_TAG,"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mBound) {
+            Log.d(LOG_TAG,"unbindService in TestActivity");
+            unbindService(mConnection);
+        }
+        Log.d(LOG_TAG,"onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(LOG_TAG,"onRestart");
     }
 }

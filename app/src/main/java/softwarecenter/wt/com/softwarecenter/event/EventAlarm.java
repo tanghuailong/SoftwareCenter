@@ -6,7 +6,7 @@ package softwarecenter.wt.com.softwarecenter.event;
 public class EventAlarm {
 
     private String device;
-    private String data;
+    private String date;
     private String message;
     private String state;
     private String station;
@@ -29,12 +29,12 @@ public class EventAlarm {
         this.device = device;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getMessage() {
@@ -59,5 +59,27 @@ public class EventAlarm {
 
     public void setDevice_code(String device_code) {
         this.device_code = device_code;
+    }
+
+
+    @Override
+    public String toString() {
+        return "EventAlarm{" +
+                "device='" + device + '\'' +
+                ", date='" + date + '\'' +
+                ", message='" + message + '\'' +
+                ", state='" + state + '\'' +
+                ", device_code='" + device_code + '\'' +
+                ", station='" + station + '\'' +
+                '}';
+    }
+
+    public EventAlarm(String device, String date, String message, String state, String device_code, String station) {
+        this.device = device;
+        this.date = date;
+        this.message = message;
+        this.state = state;
+        this.device_code = device_code;
+        this.station = station;
     }
 }

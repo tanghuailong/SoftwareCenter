@@ -2,13 +2,9 @@ package softwarecenter.wt.com.softwarecenter.common;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -20,10 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiFactory {
     private static final long DEFAULT_TIMEOUT  = 5;
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://192.168.0.72:8069/api/";
     private volatile static ApiFactory INSTANCE = null;
     private Retrofit retrofit = null;
     public static String sessionID = "";
+
+
 
 
     private  ApiFactory() {
@@ -32,30 +30,13 @@ public class ApiFactory {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .addInterceptor(interceptor).addNetworkInterceptor(new StethoInterceptor())
-                .cookieJar(new CookieJar() {
-                    @Override
-                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-
-                    }
-
-                    @Override
-                    public List<Cookie> loadForRequest(HttpUrl url) {
-                        final ArrayList<Cookie> oneCookie = new ArrayList<Cookie>();
-                        Cookie cookie = getSessionID();
-                        if( cookie != null) {
-                            oneCookie.add(cookie);
-                            return oneCookie;
-                        }
-                        return null;
-                    }
-                });
+                .addInterceptor(interceptor).addNetworkInterceptor(new StethoInterceptor());
 
          retrofit = new Retrofit.Builder()
                 .client(builder.build())
+                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(BASE_URL)
                 .build();
     }
 
