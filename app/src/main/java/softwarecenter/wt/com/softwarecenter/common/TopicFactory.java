@@ -3,6 +3,7 @@ package softwarecenter.wt.com.softwarecenter.common;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,12 @@ import java.util.Map;
 public class TopicFactory {
 
     private volatile static TopicFactory INSTANCE = null;
-    private Map<String,Class> topicMap;
+    private Map<String,Type> topicMap;
     private String[] topicList;
 
     private TopicFactory() {
         List<ConstantEnum> lists = Arrays.asList(ConstantEnum.values());
-        topicMap = Stream.of(lists).collect(Collectors.toMap(ConstantEnum::getTopic,ConstantEnum::getSomeClass));
+        topicMap = Stream.of(lists).collect(Collectors.toMap(ConstantEnum::getTopic,ConstantEnum::getSomeType));
         topicList = Stream.of(lists).map((e) -> e.getTopic()).toArray(String[]::new);
     }
 
@@ -35,7 +36,7 @@ public class TopicFactory {
         return INSTANCE;
     }
 
-    public Class getEntityByTopic(String topic) {
+    public Type getEntityByTopic(String topic) {
         return topicMap.get(topic);
     }
 

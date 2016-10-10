@@ -9,6 +9,8 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Type;
+
 import softwarecenter.wt.com.softwarecenter.common.TopicFactory;
 import softwarecenter.wt.com.softwarecenter.event.EventLost;
 
@@ -21,7 +23,7 @@ public class CallBackOfMqtt implements MqttCallback{
     private Gson gson = new Gson();
     @Override
     public void connectionLost(Throwable cause) {
-        Log.e(LOG_TAG,"mqtt connection lost ..."+cause.getMessage());
+        Log.e(LOG_TAG,"mqtt connection lost ...");
         cause.printStackTrace();
         //发送消息给Service,让其重启
         EventBus.getDefault().post(new EventLost(-1,cause.getMessage()));
@@ -36,15 +38,15 @@ public class CallBackOfMqtt implements MqttCallback{
         String info = message.toString();
         Log.d(LOG_TAG,"message is"+info);
 
-        //获得对应的实体类的Class
-        Class someEntity = TopicFactory.getInstance().getEntityByTopic(realTopic);
-
-        //发送出去
+        //获得对应的实体类的Type
+        Type someType = TopicFactory.getInstance().getEntityByTopic(realTopic);
         try {
-            EventBus.getDefault().post(gson.fromJson(info, someEntity));
+            //发送出去
+            EventBus.getDefault().post(gson.fromJson(info, someType));
         }catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

@@ -4,8 +4,14 @@ package softwarecenter.wt.com.softwarecenter.common;
  * Created by tanghuailong on 2016/9/28.
  */
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
 import softwarecenter.wt.com.softwarecenter.event.EventOrder;
+
 
 /**
  * 储存所有订阅主图
@@ -13,18 +19,18 @@ import softwarecenter.wt.com.softwarecenter.event.EventOrder;
 public enum ConstantEnum{
 
     //这里添加订阅的主题
-    TOPIC_ORDER("orders",EventOrder[].class),
-    TOPIC_ALARM("alarm", EventAlarm[].class);
+    TOPIC_ORDER("orders",new TypeToken<List<EventOrder>>(){}.getType()),
+    TOPIC_ALARM("alarm", new TypeToken<List<EventAlarm>>(){}.getType());
 
 
 
     private String topic;
-    private Class someClass;
+    private Type someType;
 
 
-    private ConstantEnum(String topic,Class someClass) {
+    private ConstantEnum(String topic,Type someType) {
         this.topic = "ciiic."+topic;
-        this.someClass = someClass;
+        this.someType = someType;
     }
 
     public String getTopic() {
@@ -35,11 +41,11 @@ public enum ConstantEnum{
         this.topic = topic;
     }
 
-    public Class getSomeClass() {
-        return someClass;
+    public Type getSomeType() {
+        return someType;
     }
 
-    public void setSomeClass(Class someClass) {
-        this.someClass = someClass;
+    public void setSomeType(Type someType) {
+        this.someType = someType;
     }
 }
