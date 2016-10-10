@@ -20,6 +20,7 @@ import Lib.FWReader.S8.function_S8;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import softwarecenter.wt.com.softwarecenter.common.ApiFactory;
+import softwarecenter.wt.com.softwarecenter.event.EventScan;
 import softwarecenter.wt.com.softwarecenter.service.ApiService;
 import softwarecenter.wt.com.softwarecenter.service.ScanService;
 import softwarecenter.wt.com.softwarecenter.service.SwipeCardService;
@@ -131,6 +132,7 @@ public class WelcomeActivity extends Activity {
                     .subscribe((r) -> {
                         if(r.isCode()) {
                             lastLoginId = cardId;
+                            EventBus.getDefault().unregister(this);
                             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -142,9 +144,28 @@ public class WelcomeActivity extends Activity {
                            e.printStackTrace();
                     });
         }
-
-
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loginByScanMachine(EventScan eventScan) {
+        Log.d(LOG_TAG,eventScan.getMessage());
+        apiService.getLoginResult(eventScan.getMessage(),"一体机")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((r) -> {
+                    if(r.isCode()) {
+                        EventBus.getDefault().unregister(this);
+                        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Toast.makeText(WelcomeActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
+                    }
+                },(e) -> {
+                    e.printStackTrace();
+                });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

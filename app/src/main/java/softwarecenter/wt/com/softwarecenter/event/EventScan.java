@@ -1,22 +1,22 @@
 package softwarecenter.wt.com.softwarecenter.event;
 
 /**
- * Created by duanshiyao on 2016/9/30.
- * email：duanshiyao@vtstar.net
+ * Created by tanghuailong on 2016/10/10.
  */
-
 public class EventScan {
-    String id;
+    private String message;
 
-    public String getId() {
-        return id;
+    public EventScan() {
+
+    }
+    public EventScan(String message) {
+        this.message = message;
+    }
+    public String getMessage() {
+        return message;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public EventScan(String id) {
-        this.id = id;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

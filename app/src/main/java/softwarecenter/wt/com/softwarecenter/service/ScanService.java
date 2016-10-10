@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 import android_serialport_api.ComBean;
 import android_serialport_api.SerialHelper;
-
+import softwarecenter.wt.com.softwarecenter.event.EventScan;
 
 /*
 * 串口服务类
@@ -35,7 +35,6 @@ public class ScanService extends Service {
     public void onCreate() {
         super.onCreate();
         initData();
-//        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -43,7 +42,6 @@ public class ScanService extends Service {
         super.onDestroy();
         closeComPort(comA);
         closeComPort(comB);
-        EventBus.getDefault().unregister(this);
     }
 
 
@@ -72,8 +70,8 @@ public class ScanService extends Service {
             //Observable<String> abstring = apiService.getOrdersll(new String(comRecData.bRec));
 
             //通过EventBus将读取的串口数据交给应用的地方
-//            EventScan comevent = new EventScan(new String(comRecData.bRec));
-            EventBus.getDefault().post(new String(comRecData.bRec));
+            EventScan comevent = new EventScan(new String(comRecData.bRec));
+            EventBus.getDefault().post(comevent);
         }
     }
 
