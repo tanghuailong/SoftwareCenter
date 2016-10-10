@@ -18,7 +18,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -142,19 +141,19 @@ public class BasicFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getAlarm(EventAlarm[] eventAlarms) {
-        List<EventAlarm> eventAlarmList = Arrays.asList(eventAlarms);
-        Log.d(LOG_TAG,eventAlarmList.toString());
-        showAlarmData(eventAlarmList);
+    public void getAlarm(List<EventAlarm> eventAlarms) {
+        /*List<EventAlarm> eventAlarmList = Arrays.asList(eventAlarms);
+        Log.d(LOG_TAG,eventAlarmList.toString());*/
+        showAlarmData(eventAlarms);
 
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getOrders(EventOrder[] eventOrders){
-        List<EventOrder> eventOrderList=Arrays.asList(eventOrders);
-        Log.d(LOG_TAG,eventOrders[0].toString());
-        pushOrderData(eventOrderList);
+    public void getOrders(List<EventOrder> eventOrders){
+        /*List<EventOrder> eventOrderList=Arrays.asList(eventOrders);
+        Log.d(LOG_TAG,eventOrders[0].toString());*/
+        pushOrderData(eventOrders);
     }
 
     private void pushOrderData(List<EventOrder> eventOrderList) {

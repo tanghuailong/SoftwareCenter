@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Lib.FWReader.S8.function_S8;
-import de.greenrobot.event.EventBus;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import softwarecenter.wt.com.softwarecenter.bean.Tab;
@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String lastLoginId="";
 
-    private long startTime=0;
+    long startTime=0;
+
+
 
     private ApiService apiService= ApiFactory.getInstance().getApi(ApiService.class);
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //初始化调试工具
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         //启动service
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
+
+        EventBus.getDefault().register(this);
 
 
 
@@ -153,13 +157,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logoutEventBus(String cardId){
-        long endTime=System.currentTimeMillis();
-        if(!cardId.equals(lastLoginId)) {
-            startTime = 0;
-        }
-        if(endTime-startTime>60000) {
             Log.d(LOG_TAG,"cardId "+cardId);
-            startTime = System.currentTimeMillis();
+
+        long endTime=System.currentTimeMillis();
+
+        if(!cardId.equals(lastLoginId)){
+            startTime=0;
+        }
+        if(endTime-startTime>60000){
+            startTime=System.currentTimeMillis();
             apiService.getLogoutResult(cardId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -180,9 +186,12 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
 
+        }
 
 
-    }
+
+
+
     @Override
     protected void onResume() {
 
