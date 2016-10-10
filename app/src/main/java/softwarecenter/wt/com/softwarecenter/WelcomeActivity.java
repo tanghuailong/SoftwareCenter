@@ -66,6 +66,9 @@ public class WelcomeActivity extends Activity {
         Intent intent=new Intent(this,ScanService.class);
         startService(intent);
         onclick();
+        if("Main".equals(getIntent().getStringExtra("from"))){
+            startTime = System.currentTimeMillis();
+        }
         EventBus.getDefault().register(this);
 
 
@@ -113,13 +116,13 @@ public class WelcomeActivity extends Activity {
         Log.d(LOG_TAG,"onRestart");
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void helloEventBus(String cardId){
-
+    public void loginEventBus(String cardId){
         long endTime = System.currentTimeMillis();
         if(!cardId.equals(lastLoginId)) {
             startTime = 0;
         }
         if(endTime - startTime > 60000) {
+            Log.d(LOG_TAG,"cardId "+cardId);
             startTime = System.currentTimeMillis();
 
             apiService.getLoginResult(cardId,"一体机")

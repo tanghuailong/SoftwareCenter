@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Lib.FWReader.S8.function_S8;
+import de.greenrobot.event.EventBus;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import softwarecenter.wt.com.softwarecenter.bean.Tab;
@@ -151,20 +152,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void helloEventBus(String cardId){
+    public void logoutEventBus(String cardId){
         long endTime=System.currentTimeMillis();
         if(!cardId.equals(lastLoginId)) {
             startTime = 0;
         }
         if(endTime-startTime>60000) {
-
+            Log.d(LOG_TAG,"cardId "+cardId);
+            startTime = System.currentTimeMillis();
             apiService.getLogoutResult(cardId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((r) -> {
                         if (r.isCode()) {
                             lastLoginId = cardId;
+                            EventBus.getDefault().unregister(this);
                             Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                            intent.putExtra("from","Main");
                             startActivity(intent);
                             finish();
                         } else {
