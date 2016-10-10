@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import softwarecenter.wt.com.softwarecenter.R;
-import softwarecenter.wt.com.softwarecenter.bean.Order;
+import softwarecenter.wt.com.softwarecenter.event.EventOrder;
 
 /**
  * Created by chogo on 2016/9/26.
@@ -19,10 +19,10 @@ import softwarecenter.wt.com.softwarecenter.bean.Order;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.viewHolder>{
     private LayoutInflater mInflater;
     private View mView;
-    private List<Order> mDatas;
+    private List<EventOrder> mDatas;
     private Context mContext;
 
-    public MyAdapter(Context mContext, List<Order> datas) {
+    public MyAdapter(Context mContext, List<EventOrder> datas) {
         this.mContext = mContext;
         this.mDatas = datas;
     }
@@ -39,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.viewHolder>{
       /*  if(mDatas!=null){
 
         }*/
-        Order order=mDatas.get(position);
+        EventOrder order=mDatas.get(position);
         holder.text_name.setText(order.getName());
         //holder.text_name.setText(Html.fromHtml("<u>"+order.getName()+"</u>"));
         holder.text_product_line.setText(order.getProduct_line());

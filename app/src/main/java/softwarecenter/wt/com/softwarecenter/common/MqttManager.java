@@ -27,9 +27,9 @@ public class MqttManager {
     private int[] qosLevel;
 
 
-    private static final String rabbitmqUrl = "tcp://114.215.139.181:1883";
-    private static final String userName = "root";
-    private static final String password = "tanghuailong";
+    private static final String rabbitmqUrl = "tcp://192.168.0.72:1883";
+    private static final String userName = "admin";
+    private static final String password = "admin";
 
 
 

@@ -1,12 +1,11 @@
-package softwarecenter.wt.com.softwarecenter.bean;
+package softwarecenter.wt.com.softwarecenter.event;
 
 /**
- * Created by chogo on 2016/9/26.
- * entity of Order
+ * Created by chenggong on 2016/10/9.
  */
 
-public class Order {
-    /*private String order_id;
+public class EventOrder {
+    private String order_id;
     private String name;//订单名称
     private String product_line;//生产线
     private int order_qty;//订单数量
@@ -19,24 +18,6 @@ public class Order {
     private String order_bom;//物料清单
     private boolean postpone_label;//是否可延迟订单
     private boolean ahead_time_label;//是否可提前
-
-    public Order() {
-
-    }
-    public Order(String name, String product_line, int order_qty, String start_time, String end_date, String product, String status, int priority, String notes, String order_bom, boolean postpone_label, boolean ahead_time_label) {
-        this.name = name;
-        this.product_line = product_line;
-        this.order_qty = order_qty;
-        this.start_time = start_time;
-        this.end_date = end_date;
-        this.product = product;
-        this.status = status;
-        this.priority = priority;
-        this.notes = notes;
-        this.order_bom = order_bom;
-        this.postpone_label = postpone_label;
-        this.ahead_time_label = ahead_time_label;
-    }
 
     public String getOrder_id() {
         return order_id;
@@ -142,10 +123,26 @@ public class Order {
         this.ahead_time_label = ahead_time_label;
     }
 
+    public EventOrder(String name, String product_line, int order_qty, String start_time, String end_date, String product, String status, int priority, String notes, String order_bom, boolean postpone_label, boolean ahead_time_label) {
+        this.name = name;
+        this.product_line = product_line;
+        this.order_qty = order_qty;
+        this.start_time = start_time;
+        this.end_date = end_date;
+        this.product = product;
+        this.status = status;
+        this.priority = priority;
+        this.notes = notes;
+        this.order_bom = order_bom;
+        this.postpone_label = postpone_label;
+        this.ahead_time_label = ahead_time_label;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "name='" + name + '\'' +
+        return "EventOrder{" +
+                "order_id='" + order_id + '\'' +
+                ", name='" + name + '\'' +
                 ", product_line='" + product_line + '\'' +
                 ", order_qty=" + order_qty +
                 ", start_time='" + start_time + '\'' +
@@ -158,5 +155,5 @@ public class Order {
                 ", postpone_label=" + postpone_label +
                 ", ahead_time_label=" + ahead_time_label +
                 '}';
-    }*/
+    }
 }

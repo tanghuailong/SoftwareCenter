@@ -30,10 +30,10 @@ import softwarecenter.wt.com.softwarecenter.adapter.AlarmAdatper;
 import softwarecenter.wt.com.softwarecenter.adapter.DividerGridItemDecoration;
 import softwarecenter.wt.com.softwarecenter.adapter.DividerItemDecoration;
 import softwarecenter.wt.com.softwarecenter.adapter.MyAdapter;
-import softwarecenter.wt.com.softwarecenter.bean.Order;
 import softwarecenter.wt.com.softwarecenter.bean.Staff;
 import softwarecenter.wt.com.softwarecenter.common.ApiFactory;
 import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
+import softwarecenter.wt.com.softwarecenter.event.EventOrder;
 import softwarecenter.wt.com.softwarecenter.service.ApiService;
 
 /**
@@ -64,7 +64,7 @@ public class BasicFragment extends Fragment {
     TextView textNowHours;
     private View mView;
     public  List<Staff> staffs = new ArrayList<>();
-    private List<Order> mDatas = new ArrayList<>();
+    private List<EventOrder> mDatas=new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView AlarmRecyclerview;
     private MyAdapter mAdapter;
@@ -144,9 +144,26 @@ public class BasicFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAlarm(EventAlarm[] eventAlarms) {
         List<EventAlarm> eventAlarmList = Arrays.asList(eventAlarms);
+        Log.d(LOG_TAG,eventAlarmList.toString());
         showAlarmData(eventAlarmList);
 
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getOrders(EventOrder[] eventOrders){
+        List<EventOrder> eventOrderList=Arrays.asList(eventOrders);
+        Log.d(LOG_TAG,eventOrders[0].toString());
+        pushOrderData(eventOrderList);
+    }
+
+    private void pushOrderData(List<EventOrder> eventOrderList) {
+        mAdapter = new MyAdapter(getContext(), eventOrderList);
+
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getContext()));
     }
 
     @Override

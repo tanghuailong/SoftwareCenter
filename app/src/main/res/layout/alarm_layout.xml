@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+              android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#1F2741">
+    android:background="#2B3654">
 
     <TextView
         android:layout_width="match_parent"
@@ -12,7 +13,6 @@
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:background="@drawable/shape_textview"
-
         android:gravity="center"/>
     <View
         android:layout_width="fill_parent"
@@ -34,6 +34,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="#FFFFFF"
+            android:textSize="16sp"
             android:text="设备名称"
             />
         </LinearLayout>
@@ -52,6 +53,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:text="工位"
+            android:textSize="16sp"
             />
         </LinearLayout>
         <LinearLayout
@@ -68,6 +70,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:text="报警时间"
+            android:textSize="16sp"
             />
     </LinearLayout>
         <LinearLayout
@@ -84,6 +87,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:text="报警信息"
+            android:textSize="16sp"
             />
         </LinearLayout>
         <LinearLayout
@@ -100,9 +104,16 @@
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:text="状态"
+                android:textSize="16sp"
                 />
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white">
+
+    </View>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -38,8 +38,13 @@ public class CallBackOfMqtt implements MqttCallback{
 
         //获得对应的实体类的Class
         Class someEntity = TopicFactory.getInstance().getEntityByTopic(realTopic);
+
         //发送出去
-        EventBus.getDefault().post(gson.fromJson(info,someEntity));
+        try {
+            EventBus.getDefault().post(gson.fromJson(info, someEntity));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
