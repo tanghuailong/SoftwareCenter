@@ -61,7 +61,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#1D8EC8">
            <include
                android:layout_width="match_parent"
                android:layout_height="match_parent"
@@ -122,7 +123,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        xmlns:fresco="http://schemas.android.com/tools"
+                       >
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -133,6 +136,17 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             />
+
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
+                            android:id="@+id/last_staff_image"
+                            fresco:placeholderImage="@mipmap/wecone"
+                            android:layout_marginBottom="10dp"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -303,6 +317,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        xmlns:fresco="http://schemas.android.com/tools"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="match_parent"
@@ -314,6 +329,15 @@
                             android:layout_marginTop="10dp"
                             android:layout_gravity="center"
                             />
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
+                            android:id="@+id/now_staff_image"
+                            fresco:placeholderImage="@mipmap/wecone"
+                            android:layout_marginBottom="10dp"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

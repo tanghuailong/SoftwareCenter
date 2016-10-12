@@ -1,6 +1,7 @@
 package softwarecenter.wt.com.softwarecenter.fragment;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,6 +71,11 @@ public class BasicFragment extends Fragment {
     private RecyclerView AlarmRecyclerview;
     private MyAdapter mAdapter;
     private AlarmAdatper alarmAdatper;
+    private SimpleDraweeView LaststaffSimpleview,NowstaffSimpleview;
+
+    private static final String BASE_URL = "http://192.168.0.72:8069/api/";
+
+
 
     ApiService apiService = ApiFactory.getInstance().getApi(ApiService.class);
 
@@ -80,6 +88,8 @@ public class BasicFragment extends Fragment {
         EventBus.getDefault().register(this);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
         AlarmRecyclerview = (RecyclerView) mView.findViewById(R.id.alarmrecyview);
+        LaststaffSimpleview = (SimpleDraweeView) mView.findViewById(R.id.last_staff_image);
+        NowstaffSimpleview = (SimpleDraweeView) mView.findViewById(R.id.now_staff_image);
         apiService.getOrders().retry(3).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((r) -> {
             mDatas = r;
             System.out.println(r);
@@ -91,6 +101,7 @@ public class BasicFragment extends Fragment {
             staffs = m;
             System.out.println(m);
             showStaffInfo(staffs);
+
         },(e) -> {
             Log.e(LOG_TAG,e.getMessage());
         });
@@ -98,6 +109,8 @@ public class BasicFragment extends Fragment {
         return mView;
 
     }
+
+
 
     /**
      * 展示员工信息，当前信息和上一个登录信息
@@ -108,12 +121,15 @@ public class BasicFragment extends Fragment {
         textPreLogin.setText(staffs.get(0).getLogin_datetime());
         textPreLogout.setText(staffs.get(0).getLogout_datetime());
         textPreHours.setText(staffs.get(0).getHours().toString());
+        LaststaffSimpleview.setImageURI(Uri.parse(BASE_URL+staffs.get(0).getImg()));
 
         textNowName.setText(staffs.get(1).getStaff());
         textNowDevice.setText(staffs.get(1).getLogin_device());
         textNowLogin.setText(staffs.get(1).getLogin_datetime());
         textNowLogout.setText(staffs.get(1).getLogout_datetime());
         textNowHours.setText(staffs.get(1).getHours().toString());
+
+        NowstaffSimpleview.setImageURI(Uri.parse(BASE_URL+staffs.get(1).getImg()));
     }
 
     /**
@@ -141,19 +157,23 @@ public class BasicFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getAlarm(List<EventAlarm> eventAlarms) {
+    public void getAlarm(List eventAlarms) {
         /*List<EventAlarm> eventAlarmList = Arrays.asList(eventAlarms);
         Log.d(LOG_TAG,eventAlarmList.toString());*/
-        showAlarmData(eventAlarms);
+        if(eventAlarms.get(0) instanceof EventAlarm) {
+            showAlarmData(eventAlarms);
+        }
 
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getOrders(List<EventOrder> eventOrders){
+    public void getOrders(List eventOrders){
         /*List<EventOrder> eventOrderList=Arrays.asList(eventOrders);
         Log.d(LOG_TAG,eventOrders[0].toString());*/
-        pushOrderData(eventOrders);
+        if(eventOrders.get(0) instanceof EventOrder) {
+            pushOrderData(eventOrders);
+        }
     }
 
     private void pushOrderData(List<EventOrder> eventOrderList) {
