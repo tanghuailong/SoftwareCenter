@@ -96,6 +96,7 @@ URL：/api/attendance
 >        "login_device": "unknown",
 >        "logout_datetime": "2016-09-28 16:54:43",
 >        "staff": "Administrator"
+
 >    },
 >    {
 >        "hours": 0,
@@ -206,23 +207,69 @@ Topic：ciiic/alarm
 返回值：
 
 > [
-	{
->         device: "测试数据002", 
->         date: "2016-09-02", 
->         message: "懂的法国", 
->         state: "solved",
->         station:  "组装工位"
-> 	},
->	{
->       "device": "测试数据005",
->       "date": "2016-09-22",
->       "message": "瑞士军刀男",
->       "state": "unsolved",
->         station:  "检测工位"
->       "device_code": "mj_test_005"
->   },
->	...
-> ]
+>      {
+>          "device_code":"mj_test_003",
+>          "date":"2016-10-05",
+>          "state":"unsolved",
+>          "station":"加工工位",
+>          "device":"测试数据003",
+>          "message":"报警当订单"
+>      },
+>      {
+>          "device_code":"mj_test_002",
+>          "date":false,
+>          "state":"unsolved",
+>          "station":"检测工位",
+>          "device":"测试数据002",
+>          "message":false
+>      },
+>      {
+>          "device_code":"mj_test_001",
+>          "date":false,
+>          "state":"unsolved",
+>         "station":"组装工位",
+>          "device":"测试数据001",
+>          "message":true
+>      }
+>  ]
+
+
+ * 接口名称：订单生产进度跟踪
+ 
+Topic: ciiic.order.progress.tracking
+
+URL:api/order_progress_tracking
+
+参数：无
+
+返回值：
+
+> {
+>    "msg": "SUCCESS", 
+>    "orders": 
+>             [
+                {
+>                  "product_id": "P001", 
+>                  "product_desc": "云台顶盖1", 
+>                  "order_id": "1", 
+>                  "order_ratio": 0, 
+>                  "order_start_time": false, 
+>                  "order_quantity": "5", 
+>                  "order_status": "draft"
+>               }, 
+>               {
+>                  "product_id": "P002", 
+>                  "product_desc": "云台顶盖2", 
+>                  "order_id": "2", 
+>                  "order_ratio": 0, 
+>                  "order_start_time": false, 
+>                  "order_quantity": "7", 
+>                  "order_status": "draft"
+>               },
+>                ...
+>              ], 
+>    "result": "True"
+  }
 
 
 
