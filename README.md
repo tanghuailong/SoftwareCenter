@@ -1,10 +1,11 @@
-# 软件园项目
+##项目说明
 
 ### 项目使用技术
 * 使用RxJava和Retrofit 来实现访问服务器的接口
 * 使用 mqtt 来实现实时数据推送
 * 使用 butterknife 注解
 * 使用 EventBus 进行消息的传递
+* 使用 lombok 注解，减少冗余代码
 
 ### 技术点
 * 推送 Android方面通过mqtt协议通信，实现实时获取服务器的数据

@@ -22,5 +22,8 @@ public interface ApiService {
     Observable<LoginResult> getLoginResult(@Query("ic_code") String ic_code,@Query("device") String device);
     @GET("logout")
     Observable<LoginResult> getLogoutResult(@Query("ic_code") String ic_code);
+    @GET("company")
+    Observable<String> getwelcome();
+
 
 }

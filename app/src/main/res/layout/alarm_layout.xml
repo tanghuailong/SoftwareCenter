@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-              android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#2B3654">
+    android:background="#1D8EC8">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:background="@drawable/shape_textview"
+
         android:gravity="center"/>
     <View
         android:layout_width="fill_parent"
@@ -21,7 +22,8 @@
     </View>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#1F2741">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,7 +119,9 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/alarmrecyview">
+        android:id="@+id/alarmrecyview"
+        android:background="#1F2741"
+        >
 
     </android.support.v7.widget.RecyclerView>
 

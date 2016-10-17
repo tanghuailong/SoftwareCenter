@@ -1,10 +1,12 @@
 package softwarecenter.wt.com.softwarecenter;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         //启动service
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
+        //
 
         EventBus.getDefault().register(this);
 
@@ -156,40 +159,73 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logoutEventBus(String cardId) {
             Log.d(LOG_TAG,"cardId "+cardId);
-
-        long endTime = System.currentTimeMillis();
-
-        if(!cardId.equals(lastLoginId)){
-            startTime=0;
-        }
-        if(endTime-startTime>60000){
-            startTime=System.currentTimeMillis();
-            apiService.getLogoutResult(cardId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((r) -> {
-                        if (r.isCode()) {
-                            lastLoginId = cardId;
-                            EventBus.getDefault().unregister(this);
-                            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                            intent.putExtra("from", "Main");
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
-                            lastLoginId = cardId;
-                        }
-                    }, (e) -> {
-                        e.printStackTrace();
-                    });
-        }
+        exitDialog(cardId);//确认是否登出对话框
+//        long endTime = System.currentTimeMillis();
+//
+//        if(!cardId.equals(lastLoginId)){
+//            startTime=0;
+//        }
+//        if(endTime-startTime>60000){
+//            startTime=System.currentTimeMillis();
+//            apiService.getLogoutResult(cardId)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe((r) -> {
+//                        if (r.isCode()) {
+//
+//                            lastLoginId = cardId;
+//                            //System.out.println("////////////////"+lastLoginId);
+//                            EventBus.getDefault().unregister(this);
+//                            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+//                            intent.putExtra("from", "Main");
+//                            startActivity(intent);
+//                            finish();
+//
+//                        } else {
+//                            Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
+//                            lastLoginId = cardId;
+//                        }
+//                    }, (e) -> {
+//                        e.printStackTrace();
+//                    });
+//        }
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void logoutByScanMachine(EventScan eventScan) {
         Log.d(LOG_TAG,eventScan.getMessage());
-        apiService.getLogoutResult(eventScan.getMessage())
+        Scanexitdialog(eventScan);
+//        apiService.getLogoutResult(eventScan.getMessage())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe((r) -> {
+//                    if (r.isCode()) {
+//                        EventBus.getDefault().unregister(this);
+//                        Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+//                        intent.putExtra("from","Main");
+//                        startActivity(intent);
+//                     // exitDialog();
+//                       finish();
+//                    } else {
+//                        Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                }, (e) -> {
+//                    e.printStackTrace();
+//                });
+    }
+
+    private void Scanexitdialog(EventScan eventScan) {
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+        // normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("退出登录");
+        normalDialog.setMessage("确定退出登录吗？");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        apiService.getLogoutResult(eventScan.getMessage())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((r) -> {
@@ -198,14 +234,82 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                         intent.putExtra("from","Main");
                         startActivity(intent);
-                        finish();
+                     // exitDialog();
+                       finish();
                     } else {
                         Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
                     }
                 }, (e) -> {
                     e.printStackTrace();
                 });
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
+
+    //登出对话框
+    private void exitDialog(String cardId) {
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+       // normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("退出登录");
+        normalDialog.setMessage("确定退出登录吗？");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        long endTime = System.currentTimeMillis();
+                        if(!cardId.equals(lastLoginId)){
+                            startTime=0;
+                        }
+                        if(endTime-startTime>60000){
+                            startTime=System.currentTimeMillis();
+                            apiService.getLogoutResult(cardId)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe((r) -> {
+                                        if (r.isCode()) {
+
+                                            lastLoginId = cardId;
+                                            //System.out.println("////////////////"+lastLoginId);
+                                            EventBus.getDefault().unregister(this);
+                                            Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                                            intent.putExtra("from", "Main");
+                                            startActivity(intent);
+                                            finish();
+
+                                        } else {
+                                            Toast.makeText(MainActivity.this, "登出失败", Toast.LENGTH_SHORT).show();
+                                            lastLoginId = cardId;
+                                        }
+                                    }, (e) -> {
+                                        e.printStackTrace();
+                                    });
+                        }
+
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
+    }
+
+
     @Override
     protected void onResume() {
 

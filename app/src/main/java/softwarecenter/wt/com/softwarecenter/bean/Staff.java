@@ -10,6 +10,16 @@ public class Staff {
     private String login_datetime;
     private String logout_datetime;
     private Double hours;
+    private String img;
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+
 
     public Staff(String staff, String login_device, String login_datetime, String logout_datetime, Double hours) {
         this.staff = staff;

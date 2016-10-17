@@ -5,18 +5,34 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dalong.library.view.LoopRotarySwitchView;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.concurrent.TimeUnit;
+
 import Lib.FWReader.S8.function_S8;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import softwarecenter.wt.com.softwarecenter.common.ApiFactory;
@@ -32,8 +48,12 @@ import softwarecenter.wt.com.softwarecenter.service.SwipeCardService;
  */
 
 public class WelcomeActivity extends Activity {
+    private LoopRotarySwitchView loopRotarySwitchView;
+    private TextView WelcomeTextview;
+    private SimpleDraweeView  FirstSimpledraweeView, SecondSimpledraweeView, ThirdSimpledraweeView, FrothSimpledraweeView,FifthSimpledraweeView;
+    private int width;
 
-    private RelativeLayout  welcomeRelativelayout;
+    private LinearLayout welcomeLinearLayout;
     private static final String LOG_TAG = "WelcomeActivity";
 
     private SwipeCardService swipeCardService;
@@ -63,10 +83,13 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_layout);
-        welcomeRelativelayout = (RelativeLayout) findViewById(R.id.welcome_rlayout);
+       // welcomeRelativelayout = () findViewById(R.id.welcome_rlayout);
+        welcomeLinearLayout = (LinearLayout) findViewById(R.id.welcome_llayout);
+        initView();
+        getwelcometextview();
         Intent intent=new Intent(this,ScanService.class);
         startService(intent);
-        onclick();
+        //onclick();
         if("Main".equals(getIntent().getStringExtra("from"))){
             startTime = System.currentTimeMillis();
         }
@@ -78,7 +101,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void onclick() {
-        welcomeRelativelayout.setOnClickListener(new View.OnClickListener() {
+        welcomeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
@@ -155,6 +178,7 @@ public class WelcomeActivity extends Activity {
                 .subscribe((r) -> {
                     if(r.isCode()) {
                         EventBus.getDefault().unregister(this);
+
                         Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -166,6 +190,69 @@ public class WelcomeActivity extends Activity {
                 });
     }
 
+
+
+
+        private void initView() {
+        loopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.mLoopRotarySwitchView);
+        WelcomeTextview = (TextView) findViewById(R.id.welcome_tv);
+        // SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.test);
+        FirstSimpledraweeView = (SimpleDraweeView) findViewById(R.id.welcome_image_first);
+        SecondSimpledraweeView = (SimpleDraweeView) findViewById(R.id.welcome_image_second);
+        ThirdSimpledraweeView = (SimpleDraweeView) findViewById(R.id.welcome_image_third);
+        FrothSimpledraweeView = (SimpleDraweeView) findViewById(R.id.welcome_image_frouth);
+        FifthSimpledraweeView = (SimpleDraweeView) findViewById(R.id.welcome_image_fifth);
+            DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        width=dm.widthPixels;
+        Uri uri1 = Uri.parse("http://192.168.0.32:8069/api/photo1");
+            Uri uri2 = Uri.parse("http://192.168.0.32:8069/api/photo2");
+            Uri uri3 = Uri.parse("http://192.168.0.32:8069/api/photo3");
+            Uri uri4 = Uri.parse("http://192.168.0.32:8069/api/photo4");
+            Uri uri5 = Uri.parse("http://192.168.0.32:8069/api/photo5");
+
+        FirstSimpledraweeView.setImageURI(uri1);
+        SecondSimpledraweeView.setImageURI(uri2);
+        ThirdSimpledraweeView.setImageURI(uri3);
+        FrothSimpledraweeView.setImageURI(uri4);
+        FifthSimpledraweeView.setImageURI(uri5);
+        loopRotarySwitchView
+                .setR(width/3)//设置R的大小
+                .setAutoRotation(true)//是否自动切换
+                .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
+    }
+        public void getwelcometextview(){
+           // ApiFactory.BASE_URL="http://192.168.0.32:8069/api/";
+        ApiService apiService = ApiFactory.getInstance().getApi(ApiService.class);
+
+//            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//            builder.connectTimeout(5, TimeUnit.SECONDS)
+//                    .addInterceptor(interceptor).addNetworkInterceptor(new StethoInterceptor());
+//           Retrofit retrofit = new Retrofit.Builder()
+//                    .client(builder.build())
+//                    .baseUrl("http://192.168.0.32:8069/api/")
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                    .build();
+
+           // ApiService apiService = retrofit.create(ApiService.class);
+
+
+        apiService.getwelcome()
+                .retry(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((r) ->
+                {
+                    System.out.println("/////////////////////////////////////"+r+"////////////////////////////////////////");
+               WelcomeTextview.setText(r);
+                },(e) -> {
+                    e.printStackTrace();
+                });
+     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
