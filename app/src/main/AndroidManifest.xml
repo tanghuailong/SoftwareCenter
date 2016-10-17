@@ -17,17 +17,19 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboard|keyboardHidden">
-
-            </activity>
-
-        <activity android:name=".SplashScreeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            </activity>
+
+        <activity android:name=".SplashScreeActivity">
+
         </activity>
-        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".WelcomeActivity">
+
+        </activity>
 
         <service android:name=".service.ScanService"/>
         <service android:name=".service.MqttService"/>

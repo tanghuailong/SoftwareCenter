@@ -10,7 +10,10 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import softwarecenter.wt.com.softwarecenter.event.EventAlarm;
+import softwarecenter.wt.com.softwarecenter.event.EventDevices;
 import softwarecenter.wt.com.softwarecenter.event.EventOrder;
+import softwarecenter.wt.com.softwarecenter.event.EventProgress;
+import softwarecenter.wt.com.softwarecenter.event.EventQuanCheck;
 
 
 /**
@@ -20,7 +23,11 @@ public enum ConstantEnum{
 
     //这里添加订阅的主题
     TOPIC_ORDER("orders",new TypeToken<List<EventOrder>>(){}.getType()),
-    TOPIC_ALARM("alarm", new TypeToken<List<EventAlarm>>(){}.getType());
+    TOPIC_ALARM("alarm", new TypeToken<List<EventAlarm>>(){}.getType()),
+    TOPIC_ORDER_PROGRESS("order.progress.tracking",new TypeToken<EventProgress>(){}.getType()),
+    TOPIC_DEVICE_CONTROL("device.info.and.progress",new TypeToken<EventDevices>(){}.getType()),
+    TOPIC_QUALITY_CHECK("quality_record_topic",new TypeToken<EventQuanCheck>(){}.getType());
+
 
 
 

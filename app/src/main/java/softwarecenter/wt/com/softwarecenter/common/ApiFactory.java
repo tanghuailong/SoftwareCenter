@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiFactory {
     private static final long DEFAULT_TIMEOUT  = 5;
-    private static final String BASE_URL = "http://192.168.0.72:8069/api/";
+    private static final String BASE_URL = "http://192.168.0.12:8069/api/";
     private volatile static ApiFactory INSTANCE = null;
     private Retrofit retrofit = null;
     public static String sessionID = "";

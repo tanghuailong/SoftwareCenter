@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG, "onDestory");
-        Intent intent = new Intent(this, MqttService.class);
-        stopService(intent);
+        /*Intent intent = new Intent(this, MqttService.class);
+        stopService(intent);*/
     }
 
     @Override
@@ -314,8 +314,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
 
         super.onResume();
-        Intent intent = new Intent(this,SwipeCardService.class);
-        bindService(intent,mConnection,BIND_AUTO_CREATE);
+        /*Intent intent = new Intent(this,SwipeCardService.class);
+        bindService(intent,mConnection,BIND_AUTO_CREATE);*/
 
         Log.d(LOG_TAG,"onResume");
     }
@@ -323,10 +323,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(mBound) {
+        /*if(mBound) {
             Log.d(LOG_TAG,"unbindService in TestActivity");
             unbindService(mConnection);
-        }
+        }*/
         Log.d(LOG_TAG,"onPause");
     }
 

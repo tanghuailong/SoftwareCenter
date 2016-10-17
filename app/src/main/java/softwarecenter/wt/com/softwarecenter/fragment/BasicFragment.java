@@ -160,7 +160,7 @@ public class BasicFragment extends Fragment {
     public void getAlarm(List eventAlarms) {
         /*List<EventAlarm> eventAlarmList = Arrays.asList(eventAlarms);
         Log.d(LOG_TAG,eventAlarmList.toString());*/
-        if(eventAlarms.get(0) instanceof EventAlarm) {
+        if(eventAlarms.get(0) instanceof EventAlarm){
             showAlarmData(eventAlarms);
         }
 
