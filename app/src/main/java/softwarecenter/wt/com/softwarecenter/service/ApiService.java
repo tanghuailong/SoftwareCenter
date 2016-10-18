@@ -8,6 +8,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 import softwarecenter.wt.com.softwarecenter.bean.LoginResult;
 import softwarecenter.wt.com.softwarecenter.bean.Staff;
+import softwarecenter.wt.com.softwarecenter.event.EventAps;
 import softwarecenter.wt.com.softwarecenter.event.EventOrder;
 
 /**
@@ -19,11 +20,13 @@ public interface ApiService {
     @GET("attendance")
     Observable<List<Staff>> getStaffInfo();
     @GET("ic_login")
-    Observable<LoginResult> getLoginResult(@Query("ic_code") String ic_code,@Query("device") String device);
+    Observable<LoginResult> getLoginResult(@Query("ic_code") String ic_code, @Query("device") String device);
     @GET("logout")
     Observable<LoginResult> getLogoutResult(@Query("ic_code") String ic_code);
     @GET("company")
     Observable<String> getwelcome();
+    @GET("aps_result")
+    Observable<EventAps> getApsResult();
 
 
 }
