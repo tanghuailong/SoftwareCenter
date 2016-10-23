@@ -37,7 +37,6 @@ Breaks $browser.onHashChange, which was removed (use onUrlChange instead)
 
 ```
 
-
 ### 参考链接
 
 [git commit log 规范](http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
